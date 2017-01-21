@@ -9,7 +9,7 @@ turnOff = GPIO.HIGH
 
 pulsesPerGallon = 60
 
-strain1 = "Moby Dick"
+pType1 = "Moby Dick"
 
 r1Pin = 2
 r2Pin = 3
@@ -44,8 +44,8 @@ GPIO.add_event_detect(flowSensor1Pin, GPIO.RISING, callback=pulse_handler, bounc
 
 # function which defines and schedules a fresh watering cycle
 
-def start_fresh_water(scheduler, strain):
-  print "\nOpening fresh water valve for " + strain +" plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
+def start_fresh_water(scheduler, plantType):
+  print "\nOpening fresh water valve for " + plantType +" plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
 
   dispensed = 0
   GPIO.output(r1Pin, turnOn)
@@ -58,11 +58,11 @@ def start_fresh_water(scheduler, strain):
 
   dispensed = 0
   print str(waterPulseAmount / pulsesPerGallon) + " gallon(s) of water dispensed"
-  print "Closing fresh water valve for " + strain + " plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
+  print "Closing fresh water valve for " + plantType + " plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
 
   GPIO.output(r1Pin, turnOff)
 
-  scheduler.enter(delayInterval, 1, start_fresh_water, (scheduler, strain1))
+  scheduler.enter(delayInterval, 1, start_fresh_water, (scheduler, pType1))
 
 # main loop
 
@@ -71,7 +71,7 @@ try:
 
   sch = sched.scheduler(time.time, time.sleep)
 
-  start_fresh_water(sch, strain1)
+  start_fresh_water(sch, pType1)
 
   sch.run()
 
