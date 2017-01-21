@@ -7,21 +7,26 @@ GPIO.setmode(GPIO.BCM)
 turnOn = GPIO.LOW
 turnOff = GPIO.HIGH
 
+pulsesPerGallon = 60
+
 strain1 = "Moby Dick"
 
-r1 = 2
-r2 = 3
-r3 = 4
-r4 = 17
+r1Pin = 2
+r2Pin = 3
+r3Pin = 4
+r4Pin = 17
+
+flowSensor1Pin = 27
 
 # set cycle variables
 
-waterAmount = 1 # gallons per cycle
+waterPulseAmount = 60 # desired pulse amount
+dispensed = 0 # how much water has been dispensed so far
 delayInterval = 60 # hours between cycle
 
 # init list with pin numbers
 
-pinList = [r1, r2, r3 ,r4]
+pinList = [r1Pin, r2Pin, r3Pin ,r4Pin]
 
 # loop through pins and set mode and state to 'low'
 
@@ -29,18 +34,28 @@ for i in pinList:
     GPIO.setup(i, GPIO.OUT) 
     GPIO.output(i, turnOff)
 
+# water flow sensor pin event handler
+
+def pulse_handler(channel):
+  dispensed++
+
+GPIO.add_event_detect(flowSensor1Pin, GPIO.RISING, callback=pulse_handler, bouncetime=300)
+
 # function which defines and schedules a fresh watering cycle
 
 def start_fresh_water(scheduler, strain):
   print "\nOpening fresh water valve for " + strain +" plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
 
-  GPIO.output(r1, turnOn)
+  GPIO.output(r1Pin, turnOn)
 
-  time.sleep(60)
+  while dispensed < waterPulseAmount:
+    print "watering..."
 
+  dispensed = 0
+  print (waterPulseAmount / pulsesPerGallon) + " gallon(s) of water dispensed"
   print "Closing fresh water valve for " + strain + " plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
 
-  GPIO.output(r1, turnOff)
+  GPIO.output(r1Pin, turnOff)
 
   scheduler.enter(delayInterval, 1, start_fresh_water, (scheduler,))
 
