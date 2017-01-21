@@ -22,7 +22,7 @@ flowSensor1Pin = 27
 
 waterPulseAmount = 60 # desired pulse amount
 dispensed = 0 # how much water has been dispensed so far
-delayInterval = 60 # hours between cycle
+delayInterval = 30 # hours between cycle
 
 # init list with pin numbers
 
@@ -62,7 +62,7 @@ def start_fresh_water(scheduler, strain):
 
   GPIO.output(r1Pin, turnOff)
 
-  scheduler.enter(delayInterval, 1, start_fresh_water, (scheduler,))
+  scheduler.enter(delayInterval, 1, start_fresh_water, (scheduler, strain1))
 
 # main loop
 
