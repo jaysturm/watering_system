@@ -37,7 +37,7 @@ for i in pinList:
 # water flow sensor pin event handler
 
 def pulse_handler(channel):
-  dispensed++
+  dispensed += 1
 
 GPIO.add_event_detect(flowSensor1Pin, GPIO.RISING, callback=pulse_handler, bouncetime=300)
 
