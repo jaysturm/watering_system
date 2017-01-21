@@ -39,6 +39,7 @@ for i in pinList:
 def pulse_handler(channel):
   dispensed += 1
 
+GPIO.setup(flowSensor1Pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(flowSensor1Pin, GPIO.RISING, callback=pulse_handler, bouncetime=300)
 
 # function which defines and schedules a fresh watering cycle
@@ -46,13 +47,17 @@ GPIO.add_event_detect(flowSensor1Pin, GPIO.RISING, callback=pulse_handler, bounc
 def start_fresh_water(scheduler, strain):
   print "\nOpening fresh water valve for " + strain +" plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
 
+  dispensed = 0
   GPIO.output(r1Pin, turnOn)
 
-  while dispensed < waterPulseAmount:
-    print "watering..."
+  # uncomment below and remove delay once sensor is installed
+  #while dispensed < waterPulseAmount:
+  #  print "watering..."
+
+  time.sleep(30)
 
   dispensed = 0
-  print (waterPulseAmount / pulsesPerGallon) + " gallon(s) of water dispensed"
+  print str(waterPulseAmount / pulsesPerGallon) + " gallon(s) of water dispensed"
   print "Closing fresh water valve for " + strain + " plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
 
   GPIO.output(r1Pin, turnOff)
