@@ -7,9 +7,17 @@ GPIO.setmode(GPIO.BCM)
 turnOn = GPIO.LOW
 turnOff = GPIO.HIGH
 
+# app settings
+
 pulsesPerGallon = 60
 
 pType1 = "Moby Dick"
+
+waterPulseAmount = 60 # desired pulse amount
+dispensed = 0 # how much water has been dispensed so far
+delayInterval = 10 # hours between cycle
+
+# pin variables
 
 r1Pin = 2
 r2Pin = 3
@@ -17,12 +25,6 @@ r3Pin = 4
 r4Pin = 17
 
 flowSensor1Pin = 27
-
-# set cycle variables
-
-waterPulseAmount = 60 # desired pulse amount
-dispensed = 0 # how much water has been dispensed so far
-delayInterval = 30 # hours between cycle
 
 # init list with pin numbers
 
@@ -37,6 +39,7 @@ for i in pinList:
 # water flow sensor pin event handler
 
 def pulse_handler(channel):
+  print("Channel => " + channel)
   dispensed += 1
 
 GPIO.setup(flowSensor1Pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -45,7 +48,7 @@ GPIO.add_event_detect(flowSensor1Pin, GPIO.RISING, callback=pulse_handler, bounc
 # function which defines and schedules a fresh watering cycle
 
 def start_fresh_water(scheduler, plantType):
-  print "\nOpening fresh water valve for " + plantType +" plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
+  print("\nOpening fresh water valve for " + plantType +" plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p"))
 
   dispensed = 0
   GPIO.output(r1Pin, turnOn)
@@ -54,11 +57,11 @@ def start_fresh_water(scheduler, plantType):
   #while dispensed < waterPulseAmount:
   #  print "watering..."
 
-  time.sleep(30)
+  time.sleep(5)
 
   dispensed = 0
-  print str(waterPulseAmount / pulsesPerGallon) + " gallon(s) of water dispensed"
-  print "Closing fresh water valve for " + plantType + " plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p")
+  print(str(waterPulseAmount / pulsesPerGallon) + " gallon(s) of water dispensed")
+  print("Closing fresh water valve for " + plantType + " plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p"))
 
   GPIO.output(r1Pin, turnOff)
 
@@ -67,7 +70,7 @@ def start_fresh_water(scheduler, plantType):
 # main loop
 
 try:
-  print "\n>>>> Starting watering system <<<<"
+  print("\n>>>> Starting watering system <<<<")
 
   sch = sched.scheduler(time.time, time.sleep)
 
@@ -79,7 +82,7 @@ try:
 
 # End program cleanly with keyboard
 except KeyboardInterrupt:
-  print "\n>>>> Stopping watering system <<<<\n"
+  print("\n>>>> Stopping watering system <<<<\n")
 
   # Reset GPIO settings
   GPIO.cleanup()
