@@ -61,7 +61,7 @@ def start_fresh_water(scheduler, plantType):
 
   dispensed = 0
   print(str(waterPulseAmount / pulsesPerGallon) + " gallon(s) of water dispensed")
-  print("Closing fresh water valve for " + plantType + " plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p"))
+  print("Closing fresh water valve for " + plantType + " plant(s) " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p"))
 
   GPIO.output(r1Pin, turnOff)
 
