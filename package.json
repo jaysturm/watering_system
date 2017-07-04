@@ -1,0 +1,27 @@
+{
+  "name": "wonka_water",
+  "version": "1.0.0",
+  "description": "wonka watering system",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaysturm/watering_system.git"
+  },
+  "keywords": [
+    "wonka",
+    "water"
+  ],
+  "author": "jason sturm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaysturm/watering_system/issues"
+  },
+  "homepage": "https://github.com/jaysturm/watering_system#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
