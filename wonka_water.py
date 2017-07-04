@@ -32,8 +32,8 @@ pinList = [r1Pin, r2Pin, r3Pin ,r4Pin]
 
 # loop through pins and set mode and state to 'low'
 
-for i in pinList: 
-    GPIO.setup(i, GPIO.OUT) 
+for i in pinList:
+    GPIO.setup(i, GPIO.OUT)
     GPIO.output(i, turnOff)
 
 # water flow sensor pin event handler
@@ -48,7 +48,7 @@ GPIO.add_event_detect(flowSensor1Pin, GPIO.RISING, callback=pulse_handler, bounc
 # function which defines and schedules a fresh watering cycle
 
 def start_fresh_water(scheduler, plantType):
-  print("\nOpening fresh water valve for " + plantType +" plant " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p"))
+  print("\nOpening fresh water valve for " + plantType +" plant(s) " + dt.datetime.now().strftime("%B %d, %Y %I:%M%p"))
 
   dispensed = 0
   GPIO.output(r1Pin, turnOn)
