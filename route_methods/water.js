@@ -16,6 +16,12 @@ var waterPump = 2,
     flowSensor = 27,
     allRelayPins = [waterPump, solenoidValve, relay3, relay4];
 
+// middleware
+router.use((req, res, next) => {
+    console.log('middleware hit');
+    next();
+});
+
 router.post('/', (req, res) => {
     // set up pins
     for (var i = 0; i <= allRelayPins.length; i++) {
