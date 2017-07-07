@@ -1,4 +1,6 @@
 var rpio = require('rpio');
+var express = require('express');
+var router = express.Router();
 
 // watering cycle settings
 var dispensed = 0, // water dispensed thus far (flow meter pulses)
@@ -14,7 +16,7 @@ var waterPump = 2,
     flowSensor = 27,
     allRelayPins = [waterPump, solenoidValve, relay3, relay4];
 
-module.exports = function waterHandler(req, res) {
+router.post('/', function waterHandler(req, res) {
     // set up pins
     for (var i = 0; i <= allRelayPins.length; i++) {
         rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_DOWN);
@@ -33,7 +35,7 @@ module.exports = function waterHandler(req, res) {
 
     // stop watering cycle
     stop_water();
-}
+});
 
 function pulse_handler(channel) {
     console.log('Channel => ' + channel);
