@@ -17,7 +17,7 @@ var waterPump = 2,
     allRelayPins = [waterPump, solenoidValve, relay3, relay4];
 
 // middleware
-router.use(function(req, res, next) {
+router.use((req, res, next) => {
     console.log('middleware hit');
     next();
 });
@@ -72,3 +72,5 @@ function stop_water() {
     console.log('Closing solenoid valve.');
     rpio.write(solenoidValve, rpio.LOW);
 }
+
+module.exports = router;
