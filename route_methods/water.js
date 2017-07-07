@@ -6,7 +6,10 @@ var router = express.Router();
 var dispensed = 0, // water dispensed thus far (flow meter pulses)
     amountToDispense = 60, // desired pulses (don't know how much water per pulse yet)
     pulsesPerGallon = 60,
-    zoneToWater = -1; // which zone to water (which relay to pull high)
+    zoneToWater = -1, // which zone to water
+    turnOn = rpio.LOW,
+    turnOff = rpio.HIGH,
+    currentlyWatering = false;
 
 // pins
 var waterPump = 3,
@@ -14,24 +17,23 @@ var waterPump = 3,
     relay3 = 7,
     relay4 = 11,
     flowSensor = 27,
-    allRelayPins = [waterPump, solenoidValve, relay3, relay4],
-    turnOn = rpio.LOW,
-    turnOff = rpio.HIGH;
+    allRelayPins = [waterPump, solenoidValve, relay3, relay4];
 
 // middleware
 router.use((req, res, next) => {
-    console.log('Watering API middleware hit');
+    // console.log('Watering API middleware hit');
     next();
 });
 
 router.get('/', (req, res) => {
-    res.send('No watering cycles currently running.');
+    currentlyWatering ? res.send('Watering cycle currently running.') : res.send('No watering cycles currently running.');
     res.end();
 });
 
 router.post('/', (req, res) => {
     try {
         console.log('**** Starting watering cycle ****');
+        currentlyWatering = true;
 
         rpio.init({
             gpiomem: false,
@@ -40,7 +42,6 @@ router.post('/', (req, res) => {
 
         // set up pins
         for (var i = 0; i < allRelayPins.length; i++) {
-            console.log(`Setting up pin ${allRelayPins[i]}`);
             rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_DOWN);
         }
 
@@ -69,6 +70,7 @@ router.post('/', (req, res) => {
         res.end();
     }
 
+    currentlyWatering = false;
     console.log('**** Ending watering cycle ****');
     console.log('');
 });
