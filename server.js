@@ -4,6 +4,12 @@ const server = express();
 var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 server.use('/', defaultRoute);
 server.use('/water', water);
 
