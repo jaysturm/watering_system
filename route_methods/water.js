@@ -28,33 +28,33 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    try {
-        // set up pins
-        for (var i = 0; i <= allRelayPins.length; i++) {
-            rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_DOWN);
-        }
-
-        // set up flow sensor pin and register handler
-        // rpio.open(flowSensor, rpio.INPUT, rpio.PULL_UP);
-        // rpio.poll(flowSensor, pulse_handler);
-
-        // start watering cycle
-        start_water();
-
-        while (dispensed < amountToDispense) {
-            console.log('watering...');
-        }
-
-        // stop watering cycle
-        stop_water();
-
-        res.send('Watering cycle complete.');
-        res.end();
-    } catch (err) {
-        console.log('error watering => ', err);
-        res.send('Error occured during watering cycle.');
-        res.end();
+    // try {
+    // set up pins
+    for (var i = 0; i <= allRelayPins.length; i++) {
+        rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_DOWN);
     }
+
+    // set up flow sensor pin and register handler
+    // rpio.open(flowSensor, rpio.INPUT, rpio.PULL_UP);
+    // rpio.poll(flowSensor, pulse_handler);
+
+    // start watering cycle
+    start_water();
+
+    while (dispensed < amountToDispense) {
+        console.log('watering...');
+    }
+
+    // stop watering cycle
+    stop_water();
+
+    res.send('Watering cycle complete.');
+    res.end();
+    // } catch (err) {
+    //     console.log('error watering => ', err);
+    //     res.send('Error occured during watering cycle.');
+    //     res.end();
+    // }
 });
 
 function pulse_handler(channel) {
