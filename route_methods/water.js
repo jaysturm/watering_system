@@ -9,10 +9,10 @@ var dispensed = 0, // water dispensed thus far (flow meter pulses)
     zoneToWater = -1; // which zone to water (which relay to pull high)
 
 // pins
-var waterPump = 2,
-    solenoidValve = 3,
+var waterPump = 3,
+    solenoidValve = 5,
     relay3 = 4,
-    relay4 = 17,
+    relay4 = 7,
     flowSensor = 27,
     allRelayPins = [waterPump, solenoidValve, relay3, relay4];
 
