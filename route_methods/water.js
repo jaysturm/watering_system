@@ -29,6 +29,11 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     try {
+        rpio.init({
+            gpiomem: false,
+            mapping: 'physical'
+        });
+
         // set up pins
         for (var i = 0; i <= allRelayPins.length; i++) {
             console.log(`Setting up pin ${allRelayPins[i]}`);
