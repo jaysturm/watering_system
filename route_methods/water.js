@@ -14,7 +14,9 @@ var waterPump = 3,
     relay3 = 7,
     relay4 = 11,
     flowSensor = 27,
-    allRelayPins = [waterPump, solenoidValve, relay3, relay4];
+    allRelayPins = [waterPump, solenoidValve, relay3, relay4],
+    turnOn = rpio.LOW,
+    turnOff = rpio.HIGH;
 
 // middleware
 router.use((req, res, next) => {
@@ -39,7 +41,7 @@ router.post('/', (req, res) => {
         // set up pins
         for (var i = 0; i < allRelayPins.length; i++) {
             console.log(`Setting up pin ${allRelayPins[i]}`);
-            rpio.open(allRelayPins[i], rpio.OUTPUT);
+            rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_DOWN);
         }
 
         // set up flow sensor pin and register handler
@@ -79,10 +81,10 @@ function pulse_handler(channel) {
 function start_water() {
     // open valve and turn on pump
     console.log('Opening solenoid valve.');
-    rpio.write(solenoidValve, rpio.HIGH);
+    rpio.write(solenoidValve, turnOn);
 
     console.log('Turning on water pump.');
-    rpio.write(waterPump, rpio.HIGH);
+    rpio.write(waterPump, turnOn);
 }
 
 function stop_water() {
@@ -91,14 +93,14 @@ function stop_water() {
 
     // turn off water pump
     console.log('Shutting off water pump.')
-    rpio.write(waterPump, rpio.LOW);
+    rpio.write(waterPump, turnOff);
 
     // wait 10 seconds
     rpio.sleep(10);
 
     // close solenoid valve
     console.log('Closing solenoid valve.');
-    rpio.write(solenoidValve, rpio.LOW);
+    rpio.write(solenoidValve, turnOff);
 }
 
 module.exports = router;
