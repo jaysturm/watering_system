@@ -41,6 +41,9 @@ router.post('/', (req, res) => {
 
     // stop watering cycle
     stop_water();
+
+    res.end();
+    res.send('Watering cycle complete');
 });
 
 function pulse_handler(channel) {
