@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
         // set up pins
         for (var i = 0; i < allRelayPins.length; i++) {
             console.log(`Setting up pin ${allRelayPins[i]}`);
-            rpio.open(allRelayPins[i], rpio.OUTPUT);
+            rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_UP);
         }
 
         // set up flow sensor pin and register handler
@@ -45,13 +45,7 @@ router.post('/', (req, res) => {
         // rpio.poll(flowSensor, pulse_handler);
 
         // start watering cycle
-        // start_water();
-        // open valve and turn on pump
-        console.log('Opening solenoid valve.');
-        rpio.write(solenoidValve, rpio.HIGH);
-
-        console.log('Turning on water pump.');
-        rpio.write(waterPump, rpio.HIGH);
+        start_water();
 
         // uncomment once water flow sensor is hooked up
         // while (dispensed < amountToDispense) {
