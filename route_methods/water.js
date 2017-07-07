@@ -16,7 +16,7 @@ var waterPump = 2,
     flowSensor = 27,
     allRelayPins = [waterPump, solenoidValve, relay3, relay4];
 
-router.post('/', function waterHandler(req, res) {
+router.post('/', (req, res) => {
     // set up pins
     for (var i = 0; i <= allRelayPins.length; i++) {
         rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_DOWN);

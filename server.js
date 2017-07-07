@@ -5,10 +5,10 @@ var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');
 
 server.use('/', defaultRoute);
-server.post('/water', water);
+server.use('/water', water);
 
 // catch 404 and forward to error handler
-server.use(function(req, res, next) {
+server.use((req, res, next) => {
     var err = new Error('404 - Not Found');
     err.status = 404;
     next(err);
