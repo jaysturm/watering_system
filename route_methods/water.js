@@ -22,6 +22,11 @@ router.use((req, res, next) => {
     next();
 });
 
+router.get('/', (req, res) => {
+    res.send('No watering cycles currently running.');
+    res.end();
+});
+
 router.post('/', (req, res) => {
     // set up pins
     for (var i = 0; i <= allRelayPins.length; i++) {
@@ -42,8 +47,8 @@ router.post('/', (req, res) => {
     // stop watering cycle
     stop_water();
 
-    res.end();
     res.send('Watering cycle complete');
+    res.end();
 });
 
 function pulse_handler(channel) {
