@@ -29,6 +29,8 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     try {
+        console.log('**** Starting watering cycle ****');
+
         rpio.init({
             gpiomem: false,
             mapping: 'physical'
@@ -64,6 +66,9 @@ router.post('/', (req, res) => {
         res.send('Error occured during watering cycle.');
         res.end();
     }
+
+    console.log('**** Ending watering cycle ****');
+    console.log('');
 });
 
 function pulse_handler(channel) {
