@@ -45,11 +45,20 @@ router.post('/', (req, res) => {
         // rpio.poll(flowSensor, pulse_handler);
 
         // start watering cycle
-        start_water();
+        // start_water();
+        // open valve and turn on pump
+        console.log('Opening solenoid valve.');
+        rpio.write(solenoidValve, rpio.HIGH);
 
-        while (dispensed < amountToDispense) {
-            console.log('watering...');
-        }
+        console.log('Turning on water pump.');
+        rpio.write(waterPump, rpio.HIGH);
+
+        // uncomment once water flow sensor is hooked up
+        // while (dispensed < amountToDispense) {
+        //     console.log('watering...');
+        // }
+
+        rpio.sleep(10);
 
         // stop watering cycle
         stop_water();
