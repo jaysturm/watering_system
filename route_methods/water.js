@@ -18,7 +18,7 @@ var waterPump = 2,
 
 // middleware
 router.use((req, res, next) => {
-    console.log('middleware hit');
+    console.log('Watering API middleware hit');
     next();
 });
 
@@ -35,8 +35,8 @@ router.post('/', (req, res) => {
         }
 
         // set up flow sensor pin and register handler
-        rpio.open(flowSensor, rpio.INPUT, rpio.PULL_UP);
-        rpio.poll(flowSensor, pulse_handler);
+        // rpio.open(flowSensor, rpio.INPUT, rpio.PULL_UP);
+        // rpio.poll(flowSensor, pulse_handler);
 
         // start watering cycle
         start_water();
