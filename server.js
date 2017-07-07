@@ -9,7 +9,7 @@ server.post('/water', water);
 
 // catch 404 and forward to error handler
 server.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('404 - Not Found');
   err.status = 404;
   next(err);
 });
@@ -17,3 +17,5 @@ server.use(function(req, res, next) {
 server.listen(5555, () => {
   console.log("Server running at http://127.0.0.1:5555/");
 });
+
+module.exports = server;
