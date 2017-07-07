@@ -17,7 +17,7 @@ var waterPump = 2,
     allRelayPins = [waterPump, solenoidValve, relay3, relay4];
 
 // middleware
-router.use((req, res, next) => {
+router.use(function(req, res, next) {
     console.log('middleware hit');
     next();
 });
