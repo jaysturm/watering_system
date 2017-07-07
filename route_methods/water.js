@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
         // set up pins
         for (var i = 0; i < allRelayPins.length; i++) {
             console.log(`Setting up pin ${allRelayPins[i]}`);
-            rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_UP);
+            rpio.open(allRelayPins[i], rpio.OUTPUT);
         }
 
         // set up flow sensor pin and register handler
@@ -88,8 +88,8 @@ function stop_water() {
     console.log('Shutting off water pump.')
     rpio.write(waterPump, rpio.LOW);
 
-    // wait 20 seconds
-    rpio.sleep(20);
+    // wait 10 seconds
+    rpio.sleep(10);
 
     // close solenoid valve
     console.log('Closing solenoid valve.');
