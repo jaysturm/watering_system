@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
         });
 
         // set up pins
-        for (var i = 0; i <= allRelayPins.length; i++) {
+        for (var i = 0; i < allRelayPins.length; i++) {
             console.log(`Setting up pin ${allRelayPins[i]}`);
             rpio.open(allRelayPins[i], rpio.OUTPUT, rpio.PULL_DOWN);
         }
