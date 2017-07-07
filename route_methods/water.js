@@ -8,8 +8,7 @@ var dispensed = 0, // water dispensed thus far (flow meter pulses)
     pulsesPerGallon = 60,
     zoneToWater = -1, // which zone to water
     turnOn = rpio.LOW,
-    turnOff = rpio.HIGH,
-    currentlyWatering = false;
+    turnOff = rpio.HIGH;
 
 // pins
 var waterPump = 3,
@@ -26,14 +25,13 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-    currentlyWatering ? res.send('Watering cycle currently running.') : res.send('No watering cycles currently running.');
+    res.send('No watering cycles currently running.');
     res.end();
 });
 
 router.post('/', (req, res) => {
     try {
         console.log('**** Starting watering cycle ****');
-        currentlyWatering = true;
 
         rpio.init({
             gpiomem: false,
@@ -70,7 +68,6 @@ router.post('/', (req, res) => {
         res.end();
     }
 
-    currentlyWatering = false;
     console.log('**** Ending watering cycle ****');
     console.log('');
 });
