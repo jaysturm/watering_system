@@ -3,7 +3,7 @@ const server = express();
 
 var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');
-var powerStrip = require('./route_metods/powerStrip');
+var powerStrip = require('./route_methods/powerStrip');
 
 server.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
