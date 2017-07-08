@@ -3,6 +3,7 @@ const server = express();
 
 var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');
+var powerStrip = require('./route_metods/powerStrip');
 
 server.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -12,6 +13,7 @@ server.use((req, res, next) => {
 
 server.use('/', defaultRoute);
 server.use('/water', water);
+server.use('/sockets', powerStrip);
 
 // // catch 404 and forward to error handler
 // server.use((req, res, next) => {
