@@ -12,6 +12,8 @@ server.use((req, res, next) => {
     next();
 });
 
+server.use(bodyParser.json());
+
 server.use('/', defaultRoute);
 server.use('/water', water);
 server.use('/sockets', powerStrip);
@@ -22,8 +24,6 @@ server.use('/sockets', powerStrip);
 //     err.status = 404;
 //     next(err);
 // });
-
-server.use(bodyParser.json());
 
 server.listen(5555, () => {
     console.log("Server running at http://127.0.0.1:5555/");
