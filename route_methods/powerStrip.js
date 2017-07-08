@@ -1,7 +1,6 @@
 var rpio = require('rpio');
 var express = require('express');
 var router = express.Router();
-var gpioUtil = require('../services/gpio.service');
 
 var sockets =
 {

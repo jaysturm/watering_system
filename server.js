@@ -1,6 +1,7 @@
 const express = require('express');
 const server = express();
 var bodyParser = require('body-parser');
+var gpioUtil = require('./services/gpio.service');
 
 var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');

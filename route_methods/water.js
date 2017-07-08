@@ -1,7 +1,6 @@
 var rpio = require('rpio');
 var express = require('express');
 var router = express.Router();
-var gpioUtil = require('../services/gpio.service');
 
 // watering cycle settings
 var dispensed = 0, // water dispensed thus far (flow meter pulses)
