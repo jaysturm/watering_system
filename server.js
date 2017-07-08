@@ -23,7 +23,7 @@ server.use('/sockets', powerStrip);
 //     next(err);
 // });
 
-app.use(bodyParser.json());
+server.use(bodyParser.json());
 
 server.listen(5555, () => {
     console.log("Server running at http://127.0.0.1:5555/");
