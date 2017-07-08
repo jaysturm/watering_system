@@ -18,6 +18,12 @@ var sockets =
     turnOff = rpio.HIGH,
     outputPins = [3, 5, 7, 11, 13, 15, 19, 21];
 
+// middleware
+router.use((req, res, next) => {
+    // console.log('PowerStrip API middleware hit');
+    next();
+});
+
 // params >>
 // powerOn : boolean
 // socket : 1 - 8
