@@ -28,9 +28,8 @@ router.use((req, res, next) => {
 // powerOn : boolean
 // socket : 1 - 8
 router.post('/', (req, res) => {
-        res.send(JSON.stringify(res.body));
-        res.end();
     try {
+        console.log(`req body => ${req.body}`);
 
         var onOff = req.body.powerOn ? 'on' : 'off',
             pin = sockets[req.body.socket].pin;
