@@ -34,9 +34,6 @@ router.post('/', (req, res) => {
     try {
         console.log('**** starting watering cycle ****');
 
-        // set up rpio and gpio pins
-        gpioUtil.initOutPins(outputPins);
-
         // set up flow sensor pin and register handler
         // rpio.open(flowSensor, rpio.INPUT, rpio.PULL_UP);
         // rpio.poll(flowSensor, pulse_handler);

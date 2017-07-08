@@ -15,8 +15,7 @@ var sockets =
     "8" : { "pin": 21, "state": false },
 },
     turnOn = rpio.LOW,
-    turnOff = rpio.HIGH,
-    outputPins = [3, 5, 7, 11, 13, 15, 19, 21];
+    turnOff = rpio.HIGH;
 
 // middleware
 router.use((req, res, next) => {
@@ -41,9 +40,6 @@ router.post('/', (req, res) => {
             pin = sockets[req.body.socket].pin;
 
         console.log(`**** turning socket ${req.body.socket} ${onOff} ****`)
-
-        // set up rpio and gpio pins
-        gpioUtil.initOutPins(outputPins);
 
         // change socket power state
         rpio.write(pin, req.body.powerOn ? turnOn : turnOff);

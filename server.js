@@ -26,6 +26,10 @@ server.use('/sockets', powerStrip);
 // });
 
 server.listen(5555, () => {
+    // set up rpio and gpio pins
+    var allOutputPins = [3, 5, 7, 11, 13, 15, 19, 21];
+    gpioUtil.initOutPins(allOutputPins);
+
     console.log("Server running at http://127.0.0.1:5555/");
 });
 
