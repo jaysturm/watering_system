@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
         gpioUtil.initOutPins(outputPins);
 
         // change socket power state
-        rpio(pin, req.body.powerOn ? turnOn : turnOff);
+        rpio.write(pin, req.body.powerOn ? turnOn : turnOff);
 
         // set socket state
         sockets[pin].state = req.body.powerOn;
