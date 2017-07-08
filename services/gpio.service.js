@@ -1,3 +1,5 @@
+var rpio = require('rpio');
+
 module.exports = {
   initOutPins: (pins) => {
     rpio.init({
