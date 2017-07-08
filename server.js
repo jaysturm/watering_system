@@ -22,6 +22,10 @@ server.use('/sockets', powerStrip);
 //     next(err);
 // });
 
+server.configure(function(){
+  server.use(express.bodyParser());
+});
+
 server.listen(5555, () => {
     console.log("Server running at http://127.0.0.1:5555/");
 });
