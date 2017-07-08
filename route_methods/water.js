@@ -1,22 +1,20 @@
 var rpio = require('rpio');
 var express = require('express');
 var router = express.Router();
+var gpioUtil = require('../services/gpio.service');
 
 // watering cycle settings
 var dispensed = 0, // water dispensed thus far (flow meter pulses)
     amountToDispense = 60, // desired pulses (don't know how much water per pulse yet)
     pulsesPerGallon = 60,
-    zoneToWater = -1, // which zone to water
-    turnOn = rpio.LOW,
-    turnOff = rpio.HIGH;
+    zoneToWater = -1; // which zone to water
 
 // pins
 var waterPump = 3,
     solenoidValve = 5,
     relay3 = 7,
     relay4 = 11,
-    flowSensor = 27,
-    outputPins = [waterPump, solenoidValve, relay3, relay4];
+    flowSensor = 27;
 
 // middleware
 router.use((req, res, next) => {
@@ -70,10 +68,10 @@ function pulse_handler(channel) {
 function start_water() {
     // open valve and turn on pump
     console.log('>> opening solenoid valve.');
-    rpio.write(solenoidValve, turnOn);
+    rpio.write(solenoidValve, gpioUtil.turnOn);
 
     console.log('>> turning on water pump.');
-    rpio.write(waterPump, turnOn);
+    rpio.write(waterPump, gpioUtil.turnOn);
 }
 
 function stop_water() {
@@ -82,14 +80,14 @@ function stop_water() {
 
     // turn off water pump
     console.log('>> shutting off water pump.')
-    rpio.write(waterPump, turnOff);
+    rpio.write(waterPump, gpioUtil.turnOff);
 
     // wait 10 seconds
     rpio.sleep(10);
 
     // close solenoid valve
     console.log('>> closing solenoid valve.');
-    rpio.write(solenoidValve, turnOff);
+    rpio.write(solenoidValve, gpioUtil.turnOff);
 }
 
 module.exports = router;

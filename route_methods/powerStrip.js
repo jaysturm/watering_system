@@ -1,6 +1,7 @@
 var rpio = require('rpio');
 var express = require('express');
 var router = express.Router();
+var gpioUtil = require('../services/gpio.service');
 
 var sockets =
 {
@@ -12,9 +13,7 @@ var sockets =
     "6" : { "pin": 15, "state": false },
     "7" : { "pin": 19, "state": false },
     "8" : { "pin": 21, "state": false },
-},
-    turnOn = rpio.LOW,
-    turnOff = rpio.HIGH;
+};
 
 // middleware
 router.use((req, res, next) => {
@@ -41,7 +40,7 @@ router.post('/', (req, res) => {
         console.log(`**** turning socket ${req.body.socket} ${onOff} ****`)
 
         // change socket power state
-        rpio.write(pin, req.body.powerOn ? turnOn : turnOff);
+        rpio.write(pin, req.body.powerOn ? gpioUtil.turnOn : gpioUtil.turnOff);
 
         // set socket state
         sockets[req.body.socket].state = req.body.powerOn;
