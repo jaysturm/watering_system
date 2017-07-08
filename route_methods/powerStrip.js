@@ -30,6 +30,7 @@ router.use((req, res, next) => {
 router.post('/', (req, res) => {
     try {
         console.log(`req body => ${req.body}`);
+        console.log(`req body present ${req.body != undefined}`);
 
         if (req.body == undefined) {
             res.send('no req body present');
