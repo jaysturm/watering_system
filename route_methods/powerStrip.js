@@ -29,6 +29,8 @@ router.use((req, res, next) => {
 // socket : 1 - 8
 router.post('/', (req, res) => {
     try {
+        res.send(res);
+
         var onOff = req.body.powerOn ? 'on' : 'off',
             pin = sockets[req.body.socket].pin;
 
