@@ -31,6 +31,11 @@ router.post('/', (req, res) => {
     try {
         console.log(`req body => ${req.body}`);
 
+        if (!req.body) {
+            res.send('no req body present');
+            res.end();
+        }
+
         var onOff = req.body.powerOn ? 'on' : 'off',
             pin = sockets[req.body.socket].pin;
 
