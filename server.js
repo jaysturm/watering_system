@@ -1,5 +1,6 @@
 const express = require('express');
 const server = express();
+var bodyParser = require('body-parser');
 
 var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');
@@ -22,9 +23,7 @@ server.use('/sockets', powerStrip);
 //     next(err);
 // });
 
-server.configure(function(){
-  server.use(express.bodyParser());
-});
+app.use(bodyParser.json());
 
 server.listen(5555, () => {
     console.log("Server running at http://127.0.0.1:5555/");
