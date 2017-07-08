@@ -30,6 +30,7 @@ router.use((req, res, next) => {
 router.post('/', (req, res) => {
     try {
         res.send(res.body);
+        res.end();
 
         var onOff = req.body.powerOn ? 'on' : 'off',
             pin = sockets[req.body.socket].pin;
