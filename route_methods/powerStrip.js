@@ -26,10 +26,8 @@ router.use((req, res, next) => {
 // socket : 1 - 8
 router.post('/', (req, res) => {
     try {
-        console.log(`req body => ${req.body}`);
-
         if (req.body == undefined) {
-            res.send('no req body present');
+            res.send('no parameters present');
             res.end();
             return;
         }
