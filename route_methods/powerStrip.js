@@ -21,6 +21,11 @@ router.use((req, res, next) => {
     next();
 });
 
+router.get('/', (req, res) => {
+    res.send(sockets);
+    res.end();
+});
+
 // params >>
 // powerOn : boolean
 // socket : 1 - 8
