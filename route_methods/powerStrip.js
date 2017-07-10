@@ -4,16 +4,16 @@ var router = express.Router();
 var gpioUtil = require('../services/gpio.service');
 
 var sockets =
-{
-    "1" : { "pin": 3, "state": false },
-    "2" : { "pin": 5, "state": false },
-    "3" : { "pin": 7, "state": false },
-    "4" : { "pin": 11, "state": false },
-    "5" : { "pin": 13, "state": false },
-    "6" : { "pin": 15, "state": false },
-    "7" : { "pin": 19, "state": false },
-    "8" : { "pin": 21, "state": false },
-};
+[
+    { "pin": 3, "socket": 1, "state": false },
+    { "pin": 5, "socket": 2, "state": false },
+    { "pin": 7, "socket": 3, "state": false },
+    { "pin": 11, "socket": 4, "state": false },
+    { "pin": 13, "socket": 5, "state": false },
+    { "pin": 15, "socket": 6, "state": false },
+    { "pin": 19, "socket": 7, "state": false },
+    { "pin": 21, "socket": 8, "state": false }
+];
 
 // middleware
 router.use((req, res, next) => {
@@ -46,7 +46,8 @@ router.post('/', (req, res) => {
         rpio.write(pin, req.body.powerOn ? gpioUtil.turnOn : gpioUtil.turnOff);
 
         // set socket state
-        sockets[req.body.socket].state = req.body.powerOn;
+        let socket = sockets.filter(obj => obj.socket == req.body.socket);
+        socket.state = req.body.powerOn;
 
         console.log(`**** finished turning power ${onOff} ****`);
 
