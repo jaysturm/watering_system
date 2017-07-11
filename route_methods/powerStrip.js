@@ -46,8 +46,16 @@ router.post('/', (req, res) => {
         rpio.write(pin, req.body.powerOn ? gpioUtil.turnOn : gpioUtil.turnOff);
 
         // set socket state
-        let socket = sockets.filter(obj => obj.socket == req.body.socket);
-        socket.state = req.body.powerOn;
+        let socketIndex = -1;
+
+        for (var i = 0; i < sockets; i++) {
+            if (sockets[i].pin == pin) {
+                socketIndex = i;
+                break;
+            }
+        }
+
+        socket[socketIndex].state = req.body.powerOn;
 
         console.log(`**** finished turning power ${onOff} ****`);
 
