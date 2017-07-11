@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
 
         let socketIndex = -1;
 
-        for (var i = 0; i < sockets; i++) {
+        for (var i = 0; i < sockets.length; i++) {
             if (sockets[i].socket == req.body.socket) {
                 socketIndex = i;
                 break;
