@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
             }
         }
 
-        socket[socketIndex].state = req.body.powerOn;
+        sockets[socketIndex].state = req.body.powerOn;
 
         console.log(`**** finished turning power ${onOff} ****`);
 
