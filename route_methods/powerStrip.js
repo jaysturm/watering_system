@@ -37,8 +37,18 @@ router.post('/', (req, res) => {
             return;
         }
 
+        let socketIndex = -1;
+
+        for (var i = 0; i < sockets; i++) {
+            if (sockets[i].socket == req.body.socket) {
+                socketIndex = i;
+                break;
+            }
+        }
+
         var onOff = req.body.powerOn ? 'on' : 'off',
-            pin = sockets[req.body.socket].pin;
+            socket = sockets[socketIndex],
+            pin = socket.pin;
 
         console.log(`**** turning socket ${req.body.socket} ${onOff} ****`)
 
@@ -46,16 +56,7 @@ router.post('/', (req, res) => {
         rpio.write(pin, req.body.powerOn ? gpioUtil.turnOn : gpioUtil.turnOff);
 
         // set socket state
-        let socketIndex = -1;
-
-        for (var i = 0; i < sockets; i++) {
-            if (sockets[i].pin == pin) {
-                socketIndex = i;
-                break;
-            }
-        }
-
-        sockets[socketIndex].state = req.body.powerOn;
+        socket.state = req.body.powerOn;
 
         console.log(`**** finished turning power ${onOff} ****`);
 
