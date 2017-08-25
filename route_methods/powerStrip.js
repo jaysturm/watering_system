@@ -9,7 +9,7 @@ require('fs').readFile('..resources/sockets.json', 'utf8', (err, data) => {
     if (err)
        winston.error('Error getting contents of sockets json', err);
 
-    sockets = JSON.parse(data);
+    sockets = JSON.parse(data).sockets;
 });
 
 // middleware
