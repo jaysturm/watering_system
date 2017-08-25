@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var gpioUtil = require('../services/gpio.service');
 var winston = require('winston');
-var sockets = new Socket[];
+var sockets = null;
 
 require('fs').readFile('..resources/sockets.json', 'utf8', (err, data) => {
     if (err)
