@@ -16,7 +16,7 @@ server.use((req, res, next) => {
 server.use(bodyParser.json());
 
 server.use('/', defaultRoute);
-server.use('/water', water);
+// server.use('/water', water);
 server.use('/sockets', powerStrip);
 
 // // catch 404 and forward to error handler
