@@ -1,7 +1,8 @@
 var rpio = require('rpio');
 var express = require('express');
 var router = express.Router();
-var gpioUtil = require('../services/gpio.service');
+var gpioUtil = require(`${__basedir}/services/gpio.service`);
+var logger = require(`${__basedir}/logger`);
 
 // watering cycle settings
 var dispensed = 0, // water dispensed thus far (flow meter pulses)
@@ -18,7 +19,7 @@ var waterPump = 3,
 
 // middleware
 router.use((req, res, next) => {
-    // console.log('Watering API middleware hit');
+    // logger.info('Watering API middleware hit');
     next();
 });
 
@@ -29,7 +30,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     try {
-        console.log('**** starting watering cycle ****');
+        logger.info('**** starting watering cycle ****');
 
         // set up flow sensor pin and register handler
         // rpio.open(flowSensor, rpio.INPUT, rpio.PULL_UP);
@@ -40,7 +41,7 @@ router.post('/', (req, res) => {
 
         // uncomment once water flow sensor is hooked up
         // while (dispensed < amountToDispense) {
-        //     console.log('watering...');
+        //     logger.info('watering...');
         // }
 
         rpio.sleep(10);
@@ -51,26 +52,25 @@ router.post('/', (req, res) => {
         res.send('watering cycle complete.');
         res.end();
     } catch (err) {
-        console.log('>> error watering => ', err);
+        logger.error('>> error watering => ', err);
         res.send('error occured during watering cycle.');
         res.end();
     }
 
-    console.log('**** ending watering cycle ****');
-    console.log('');
+    logger.info('**** ending watering cycle ****');
 });
 
 function pulse_handler(channel) {
-    console.log('>> pulse channel => ' + channel);
+    logger.info('>> pulse channel => ' + channel);
     dispensed++;
 }
 
 function start_water() {
     // open valve and turn on pump
-    console.log('>> opening solenoid valve.');
+    logger.info('>> opening solenoid valve.');
     rpio.write(solenoidValve, gpioUtil.turnOn);
 
-    console.log('>> turning on water pump.');
+    logger.info('>> turning on water pump.');
     rpio.write(waterPump, gpioUtil.turnOn);
 }
 
@@ -79,14 +79,14 @@ function stop_water() {
     dispensed = 0;
 
     // turn off water pump
-    console.log('>> shutting off water pump.')
+    logger.info('>> shutting off water pump.')
     rpio.write(waterPump, gpioUtil.turnOff);
 
     // wait 10 seconds
     rpio.sleep(10);
 
     // close solenoid valve
-    console.log('>> closing solenoid valve.');
+    logger.info('>> closing solenoid valve.');
     rpio.write(solenoidValve, gpioUtil.turnOff);
 }
 
