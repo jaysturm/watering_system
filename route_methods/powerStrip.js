@@ -3,11 +3,11 @@ var express = require('express');
 var router = express.Router();
 var gpioUtil = require('../services/gpio.service');
 var winston = require('winston');
-var config = require('../resources/api_config');
+var settings = require('../resources/api_settings');
 var fs = require('fs');
 var sockets = null;
 
-fs.readFile(config.sockets_path, 'utf8', (err, data) => {
+fs.readFile(settings.sockets_path, 'utf8', (err, data) => {
     if (err)
        winston.error('Error getting contents of sockets json', err);
 
@@ -36,17 +36,8 @@ router.post('/', (req, res) => {
             return;
         }
 
-        let socketIndex = -1;
-
-        for (var i = 0; i < sockets.length; i++) {
-            if (sockets[i].socket == req.body.socket) {
-                socketIndex = i;
-                break;
-            }
-        }
-
         var onOff = req.body.powerOn ? 'on' : 'off',
-            socket = sockets[socketIndex],
+            socket = getSocket(req.body.socket),
             pin = socket.pin;
 
         winston.info(`**** turning socket ${req.body.socket} ${onOff} ****`)
@@ -67,5 +58,55 @@ router.post('/', (req, res) => {
         res.end();
     }
 });
+
+// change socket name
+router.post('/name', (req, res) => {
+    try {
+        if (req.body == undefined) {
+            res.send('no parameters present');
+            res.end();
+            return;
+        }
+
+        var name = req.body.name,
+            socket = getSocket(req.body.socket);
+
+        winston.info(`**** changing socket ${req.body.socket}'s name to ${name} ****`);
+
+        socket.name = name;
+        saveSockets();
+
+        winston.info(`**** finished changing socket ${req.body.socket}'s name to ${name} ****`);
+
+        res.send(sockets);
+        res.end();
+    } catch (err) {
+        winston.error('**** error changing socket power state ****', err);
+        res.send(`error changing socket power state => ${err}`);
+        res.end();
+    }
+});
+
+saveSockets = () => {
+    fs.writeFile(settings.sockets_path, sockets, (err) => {
+        if (err)
+            winston.error('**** error saving sockets json ****', err);
+
+        winston.info('**** sockets json saved successfully ****');
+    });
+};
+
+getSocket = (socket) => {
+    let socketIndex = -1;
+
+    for (var i = 0; i < sockets.length; i++) {
+        if (sockets[i].socket === socket) {
+            socketIndex = i;
+            break;
+        }
+    }
+
+    return sockets[socketIndex];
+};
 
 module.exports = router;
