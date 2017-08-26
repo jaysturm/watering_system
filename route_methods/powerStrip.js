@@ -10,8 +10,8 @@ var sockets = null;
 fs.readFile(settings.sockets_path, 'utf8', (err, data) => {
     if (err)
        winston.error('Error getting contents of sockets json', err);
-
-    sockets = JSON.parse(data);
+    else
+        sockets = JSON.parse(data);
 });
 
 // middleware
@@ -91,8 +91,8 @@ saveSockets = () => {
     fs.writeFile(settings.sockets_path, sockets, (err) => {
         if (err)
             winston.error('**** error saving sockets json ****', err);
-
-        winston.info('**** sockets json saved successfully ****');
+        else
+            winston.info('**** sockets json saved successfully ****');
     });
 };
 
