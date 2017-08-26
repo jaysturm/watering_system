@@ -16,7 +16,7 @@ fs.readFile(sockets_path, 'utf8', (err, data) => {
 
 // middleware
 router.use((req, res, next) => {
-    // console.log('PowerStrip API middleware hit');
+    // logger.info('PowerStrip API middleware hit');
     next();
 });
 
