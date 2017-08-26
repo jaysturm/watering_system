@@ -3,11 +3,10 @@ var express = require('express');
 var router = express.Router();
 var gpioUtil = require('../services/gpio.service');
 var winston = require('winston');
-var settings = require('../api_settings');
 var fs = require('fs');
 var sockets = null;
 
-fs.readFile(settings.sockets_path, 'utf8', (err, data) => {
+fs.readFile('../resources/sockets.json', 'utf8', (err, data) => {
     if (err)
        winston.error('Error getting contents of sockets json', err);
     else

@@ -2,13 +2,12 @@ const express = require('express');
 const server = express();
 var bodyParser = require('body-parser');
 var gpioUtil = require('./services/gpio.service');
-var settings = require('./api_settings');
 var winston = require('winston');
 
 winston.configure({
     transports: [
       new (winston.transports.Console)(),
-      new (winston.transports.File)({ filename: settings.log_path })
+      new (winston.transports.File)({ filename: './wonka_api.log' })
     ]
   }
 );
@@ -30,11 +29,15 @@ server.use('/', defaultRoute);
 server.use('/sockets', powerStrip);
 
 server.use('/logs', (req, res) => {
-    fs.readFile(settings.log_path, 'utf8', (err, data) => {
-        if (err)
+    fs.readFile('./wonka_api.log', 'utf8', (err, data) => {
+        if (err) {
             winston.error('Error getting logs', err);
 
-        res.send(data);
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+
         res.end();
     });
 });
