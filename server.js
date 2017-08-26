@@ -4,8 +4,9 @@ var bodyParser = require('body-parser');
 var gpioUtil = require('./services/gpio.service');
 var winston = require('winston');
 var fs = require('fs');
+var logger;
 
-winston.configure({
+logger = new (winston.Logger)({
     transports: [
       new (winston.transports.Console)(),
       new (winston.transports.File)({ filename: './wonka_api.log' })
@@ -13,7 +14,7 @@ winston.configure({
   }
 );
 
-require('winston-logs-display')(server, winston);
+require('winston-logs-display')(server, logger);
 
 var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');
