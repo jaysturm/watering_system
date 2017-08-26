@@ -5,7 +5,7 @@ var gpioUtil = require('../services/gpio.service');
 var winston = require('winston');
 var sockets = null;
 
-require('fs').readFile('/resources/sockets.json', 'utf8', (err, data) => {
+require('fs').readFile('resources/sockets.json', 'utf8', (err, data) => {
     if (err)
        winston.error('Error getting contents of sockets json', err);
 
