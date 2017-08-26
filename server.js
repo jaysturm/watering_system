@@ -8,7 +8,7 @@ var fs = require('fs');
 winston.configure({
     transports: [
       new (winston.transports.Console)(),
-      new (winston.transports.File)({ filename: './wonka_api.log' })
+      new (winston.transports.File)({ json: false, filename: './wonka_api.log' })
     ]
   }
 );
