@@ -2,17 +2,8 @@ const express = require('express');
 const server = express();
 var bodyParser = require('body-parser');
 var gpioUtil = require('./services/gpio.service');
-var winston = require('winston');
 var fs = require('fs');
-var logger;
-
-logger = new (winston.Logger)({
-    transports: [
-      new (winston.transports.Console)(),
-      new (winston.transports.File)({ filename: './wonka_api.log' })
-    ]
-  }
-);
+var logger = require('./logger');
 
 require('winston-logs-display')(server, logger);
 
