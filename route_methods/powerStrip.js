@@ -3,13 +3,23 @@ var express = require('express');
 var router = express.Router();
 var gpioUtil = require('../services/gpio.service');
 var winston = require('winston');
+var config = require('api_config');
+var fs = require('fs');
 var sockets = null;
 
-require('fs').readFile('resources/sockets.json', 'utf8', (err, data) => {
+winston.configure({
+    transports: [
+      new (winston.transports.Console)(),
+      new (winston.transports.File)({ filename: 'wonka_api.log' })
+    ]
+  }
+);
+
+fs.readFile(config.sockets_path, 'utf8', (err, data) => {
     if (err)
        winston.error('Error getting contents of sockets json', err);
 
-    sockets = JSON.parse(data).sockets;
+    sockets = JSON.parse(data);
 });
 
 // middleware
@@ -21,6 +31,16 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
     res.send(sockets);
     res.end();
+});
+
+router.get('/logs', (req, res) => {
+    fs.readFile(config.log_path, 'utf8', (err, data) => {
+        if (err)
+            winston.error('Error getting logs', err);
+
+        res.send(data);
+        res.end();
+    });
 });
 
 // params >>

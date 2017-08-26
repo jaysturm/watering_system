@@ -1,12 +1,10 @@
-{
-    "sockets": [
-        { "pin": 3, "socket": 1, "state": false },
-        { "pin": 5, "socket": 2, "state": false },
-        { "pin": 7, "socket": 3, "state": false },
-        { "pin": 11, "socket": 4, "state": false },
-        { "pin": 13, "socket": 5, "state": false },
-        { "pin": 15, "socket": 6, "state": false },
-        { "pin": 19, "socket": 7, "state": false },
-        { "pin": 21, "socket": 8, "state": false }
-    ]
-}
+[
+    { "pin": 3, "socket": 1, "state": false },
+    { "pin": 5, "socket": 2, "state": false },
+    { "pin": 7, "socket": 3, "state": false },
+    { "pin": 11, "socket": 4, "state": false },
+    { "pin": 13, "socket": 5, "state": false },
+    { "pin": 15, "socket": 6, "state": false },
+    { "pin": 19, "socket": 7, "state": false },
+    { "pin": 21, "socket": 8, "state": false }
+]
