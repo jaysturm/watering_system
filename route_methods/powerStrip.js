@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var gpioUtil = require('../services/gpio.service');
 var winston = require('winston');
-var settings = require('../resources/api_settings');
+var settings = require('../api_settings.json');
 var fs = require('fs');
 var sockets = null;
 
