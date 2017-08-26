@@ -1,15 +1,15 @@
 var rpio = require('rpio');
 var express = require('express');
 var router = express.Router();
-var gpioUtil = require('../services/gpio.service');
-var winston = require('../logger');
+var gpioUtil = require(`${__basedir}/services/gpio.service`);
+var logger = require(`${__basedir}/logger`);
 var fs = require('fs');
 var sockets = null;
-var sockets_path = './resources/sockets.json';
+var sockets_path = `${__basedir}/resources/sockets.json`;
 
 fs.readFile(sockets_path, 'utf8', (err, data) => {
     if (err)
-       winston.error('Error getting contents of sockets json', err);
+       logger.error('Error getting contents of sockets json', err);
     else
         sockets = JSON.parse(data);
 });
@@ -40,7 +40,7 @@ router.post('/', (req, res) => {
             socket = getSocket(req.body.socket),
             pin = socket.pin;
 
-        winston.info(`**** turning socket ${req.body.socket} ${onOff} ****`)
+        logger.info(`**** turning socket ${req.body.socket} ${onOff} ****`)
 
         // change socket power state
         rpio.write(pin, req.body.powerOn ? gpioUtil.turnOn : gpioUtil.turnOff);
@@ -48,12 +48,12 @@ router.post('/', (req, res) => {
         // set socket state
         socket.state = req.body.powerOn;
 
-        winston.info(`**** finished turning power ${onOff} ****`);
+        logger.info(`**** finished turning socket ${req.body.socket} power ${onOff} ****`);
 
         res.send(sockets);
         res.end();
     } catch (err) {
-        winston.error('*** error changing socket power state ****', err);
+        logger.error('*** error changing socket power state ****', err);
         res.send(`error changing socket power state => ${err}`);
         res.end();
     }
@@ -71,18 +71,18 @@ router.post('/name', (req, res) => {
         var name = req.body.name,
             socket = getSocket(req.body.socket);
 
-        winston.info(`**** changing socket ${req.body.socket}'s name to ${name} ****`);
+        logger.info(`**** changing socket ${req.body.socket}'s name to ${name} ****`);
 
         socket.name = name;
         saveSockets();
 
-        winston.info(`**** finished changing socket ${req.body.socket}'s name to ${name} ****`);
+        logger.info(`**** finished changing socket ${req.body.socket}'s name to ${name} ****`);
 
         res.send(sockets);
         res.end();
     } catch (err) {
-        winston.error('**** error changing socket power state ****', err);
-        res.send(`error changing socket power state => ${err}`);
+        logger.error('**** error changing socket name ****', err);
+        res.send(`error changing socket name => ${err}`);
         res.end();
     }
 });
@@ -90,9 +90,9 @@ router.post('/name', (req, res) => {
 saveSockets = () => {
     fs.writeFile(sockets_path, JSON.stringify(sockets), (err) => {
         if (err)
-            winston.error('**** error saving sockets json ****', err);
+            logger.error('**** error saving sockets json ****', err);
         else
-            winston.info('**** sockets json saved successfully ****');
+            logger.info('**** sockets json saved successfully ****');
     });
 };
 

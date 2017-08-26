@@ -1,15 +1,16 @@
+global.__basedir = __dirname;
 const express = require('express');
 const server = express();
 var bodyParser = require('body-parser');
-var gpioUtil = require('./services/gpio.service');
+var gpioUtil = require(`${__basedir}/services/gpio.service`);
 var fs = require('fs');
-var logger = require('./logger');
+var logger = require(`${__basedir}/logger`);
 
 require('winston-logs-display')(server, logger);
 
-var defaultRoute = require('./route_methods/index');
-var water = require('./route_methods/water');
-var powerStrip = require('./route_methods/powerStrip');
+var defaultRoute = require(`${__basedir}/route_methods/index`);
+var water = require(`${__basedir}/route_methods/water`);
+var powerStrip = require(`${__basedir}/route_methods/powerStrip`);
 
 server.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
