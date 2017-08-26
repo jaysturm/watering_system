@@ -36,7 +36,7 @@ server.use('/logs', (req, res) => {
 
             res.send(err);
         } else {
-            res.send(JSON.parse(data));
+            res.send(data);
         }
 
         res.end();
