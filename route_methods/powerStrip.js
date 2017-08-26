@@ -7,14 +7,6 @@ var config = require('../api_config');
 var fs = require('fs');
 var sockets = null;
 
-winston.configure({
-    transports: [
-      new (winston.transports.Console)(),
-      new (winston.transports.File)({ filename: 'wonka_api.log' })
-    ]
-  }
-);
-
 fs.readFile(config.sockets_path, 'utf8', (err, data) => {
     if (err)
        winston.error('Error getting contents of sockets json', err);
@@ -31,16 +23,6 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
     res.send(sockets);
     res.end();
-});
-
-router.get('/logs', (req, res) => {
-    fs.readFile(config.log_path, 'utf8', (err, data) => {
-        if (err)
-            winston.error('Error getting logs', err);
-
-        res.send(data);
-        res.end();
-    });
 });
 
 // params >>

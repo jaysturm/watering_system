@@ -2,6 +2,15 @@ const express = require('express');
 const server = express();
 var bodyParser = require('body-parser');
 var gpioUtil = require('./services/gpio.service');
+var winston = require('winston');
+
+winston.configure({
+    transports: [
+      new (winston.transports.Console)(),
+      new (winston.transports.File)({ filename: 'wonka_api.log' })
+    ]
+  }
+);
 
 var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');
@@ -18,6 +27,16 @@ server.use(bodyParser.json());
 server.use('/', defaultRoute);
 // server.use('/water', water);
 server.use('/sockets', powerStrip);
+
+server.get('/logs', (req, res) => {
+    fs.readFile(config.log_path, 'utf8', (err, data) => {
+        if (err)
+            winston.error('Error getting logs', err);
+
+        res.send(data);
+        res.end();
+    });
+});
 
 // // catch 404 and forward to error handler
 // server.use((req, res, next) => {
