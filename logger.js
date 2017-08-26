@@ -1,9 +1,10 @@
-var logger = require('winston');
+var winston = require('winston');
+var logger;
 
-logger.configure({
+logger = new (winston.Logger)({
     transports: [
-      new (logger.transports.Console)(),
-      new (logger.transports.File)({ filename: './wonka_api.log' })
+      new (winston.transports.Console)(),
+      new (winston.transports.File)({ filename: './wonka_api.log' })
     ]
   }
 );
