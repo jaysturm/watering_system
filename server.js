@@ -8,10 +8,12 @@ var fs = require('fs');
 winston.configure({
     transports: [
       new (winston.transports.Console)(),
-      new (winston.transports.File)({ json: false, filename: './wonka_api.log' })
+      new (winston.transports.File)({ filename: './wonka_api.log' })
     ]
   }
 );
+
+require('winston-logs-display')(server, winston);
 
 var defaultRoute = require('./route_methods/index');
 var water = require('./route_methods/water');
@@ -29,19 +31,19 @@ server.use('/', defaultRoute);
 // server.use('/water', water);
 server.use('/sockets', powerStrip);
 
-server.use('/logs', (req, res) => {
-    fs.readFile('./wonka_api.log', 'utf8', (err, data) => {
-        if (err) {
-            winston.error('Error getting logs', err);
+// server.use('/logs', (req, res) => {
+//     fs.readFile('./wonka_api.log', 'utf8', (err, data) => {
+//         if (err) {
+//             winston.error('Error getting logs', err);
 
-            res.send(err);
-        } else {
-            res.send(data);
-        }
+//             res.send(err);
+//         } else {
+//             res.send(data);
+//         }
 
-        res.end();
-    });
-});
+//         res.end();
+//     });
+// });
 
 // // catch 404 and forward to error handler
 // server.use((req, res, next) => {
