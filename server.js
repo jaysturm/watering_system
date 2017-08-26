@@ -2,7 +2,7 @@ const express = require('express');
 const server = express();
 var bodyParser = require('body-parser');
 var gpioUtil = require('./services/gpio.service');
-var config = require('../api_config.json');
+var config = require('../resources/api_config');
 var winston = require('winston');
 
 winston.configure({
