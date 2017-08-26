@@ -3,6 +3,7 @@ const server = express();
 var bodyParser = require('body-parser');
 var gpioUtil = require('./services/gpio.service');
 var winston = require('winston');
+var fs = require('fs');
 
 winston.configure({
     transports: [
@@ -35,7 +36,7 @@ server.use('/logs', (req, res) => {
 
             res.send(err);
         } else {
-            res.send(data);
+            res.send(JSON.parse(data));
         }
 
         res.end();
