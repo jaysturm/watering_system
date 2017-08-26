@@ -5,8 +5,9 @@ var gpioUtil = require('../services/gpio.service');
 var winston = require('winston');
 var fs = require('fs');
 var sockets = null;
+var sockets_path = '../resources/sockets.json';
 
-fs.readFile('../resources/sockets.json', 'utf8', (err, data) => {
+fs.readFile(sockets_path, 'utf8', (err, data) => {
     if (err)
        winston.error('Error getting contents of sockets json', err);
     else
@@ -87,7 +88,7 @@ router.post('/name', (req, res) => {
 });
 
 saveSockets = () => {
-    fs.writeFile(settings.sockets_path, sockets, (err) => {
+    fs.writeFile(sockets_path, sockets, (err) => {
         if (err)
             winston.error('**** error saving sockets json ****', err);
         else
