@@ -5,6 +5,7 @@ var gpioUtil = require(`${__basedir}/services/gpio.service`);
 var sms = require(`${__basedir}/services/sms.service`);
 var logger = require(`${__basedir}/logger`);
 var fs = require('fs');
+var ip = require(`${__basedir}/services/ip.service`);
 var sockets = null;
 var sockets_path = `${__basedir}/resources/sockets.json`;
 
@@ -17,10 +18,11 @@ fs.readFile(sockets_path, 'utf8', (err, data) => {
 });
 
 // send sms with current ip address
-var ip = require('ip').address();
-
-logger.info(`current ip address is ${ip}`);
-sms.sendSms('+19706170810', `my current IP is ${ip}  - power strip`);
+if (ip.isNewIP()) {
+    var address = ip.getIP();
+    logger.info(`current ip address is ${address}`);
+    sms.sendSms('+19706170810', `my current IP is ${address}  - power strip`);
+}
 
 // middleware
 router.use((req, res, next) => {
