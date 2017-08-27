@@ -14,15 +14,6 @@ module.exports = {
     getIP: () => {
         return ip.address();
     },
-    isNewIP: () => {
-        var currentIP = this.getIP();
-        var isNew = currentIP === saved_ip;
-
-        if (isNew)
-            this.saveIP(currentIP);
-
-        return isNew;
-    },
     saveIP: (ip) => {
         fs.writeFile(ip_path, ip, (err) => {
             if (err)
@@ -30,5 +21,14 @@ module.exports = {
             else
                 logger.info('**** IP address saved successfully ****');
         });
+    },
+    isNewIP: () => {
+        var currentIP = getIP();
+        var isNew = currentIP === saved_ip;
+
+        if (isNew)
+            saveIP(currentIP);
+
+        return isNew;
     }
 };
