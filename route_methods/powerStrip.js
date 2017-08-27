@@ -21,8 +21,8 @@ fs.readFile(sockets_path, 'utf8', (err, data) => {
 // send sms with current ip address
 if (ip.isNewIP()) {
     var address = ip.getIP();
-    logger.info(`sending IP address (${address}) sms.`);
-    sms.sendSms('+19706170810', `since it's free...${os.EOL}${os.EOL}New IP address detected! => ${address}${os.EOL}${os.EOL}  - power strip${os.EOL}${os.EOL}   P.S. I miss you`);
+    logger.info(`sending IP address via sms.`);
+    sms.sendSms('+19706170810', `since it's free...${os.EOL}${os.EOL}New IP address detected! => ${address}${os.EOL}${os.EOL}      - power strip${os.EOL}${os.EOL}        P.S. I miss you`);
 }
 
 // middleware

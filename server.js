@@ -4,6 +4,7 @@ const server = express();
 var bodyParser = require('body-parser');
 var gpioUtil = require(`${__basedir}/services/gpio.service`);
 var fs = require('fs');
+var ip = require(`${__basedir}/services/ip.service`);
 var logger = require(`${__basedir}/logger`);
 
 require('winston-logs-display')(server, logger);
@@ -29,7 +30,7 @@ server.listen(5555, () => {
     var allOutputPins = [3, 5, 7, 11, 13, 15, 19, 21];
     gpioUtil.initOutPins(allOutputPins);
 
-    logger.info("Server running at http://127.0.0.1:5555/");
+    logger.info(`Server running at http://${ip.getIP()}:5555/`);
 });
 
 module.exports = server;
