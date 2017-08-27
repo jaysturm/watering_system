@@ -20,16 +20,13 @@ module.exports = {
     isNewIP: () => {
         var saved_ip = fs.readFileSync(ip_path).toString();
 
-        logger.info(`Found IP from filesystem => ${saved_ip}`);
-
         var currentIP = ip.address();
         var isNew = currentIP !== saved_ip;
 
-        logger.info(`it is ${isNew} that the IP is new`);
-        logger.info(`current IP is ${currentIP} and the saved IP is ${saved_ip}`);
-
-        if (isNew)
+        if (isNew) {
+            logger.info(`new IP address detected`);
             saveIP(currentIP);
+        }
 
         return isNew;
     }
