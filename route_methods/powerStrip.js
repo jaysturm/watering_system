@@ -2,16 +2,24 @@ var rpio = require('rpio');
 var express = require('express');
 var router = express.Router();
 var gpioUtil = require(`${__basedir}/services/gpio.service`);
+var sms = require(`${__basedir}/services/sms.service`);
 var logger = require(`${__basedir}/logger`);
 var fs = require('fs');
 var sockets = null;
 var sockets_path = `${__basedir}/resources/sockets.json`;
 
+// get persisted sockets
 fs.readFile(sockets_path, 'utf8', (err, data) => {
     if (err)
        logger.error('Error getting contents of sockets json', err);
     else
         sockets = JSON.parse(data);
+});
+
+// send sms with current ip address
+require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+    logger.info(`current ip address is ${add}`);
+    sms.sendSms('+19706170810', `my current ip is ${add}  - power strip`);
 });
 
 // middleware
