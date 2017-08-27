@@ -6,6 +6,8 @@ var logger = require(`${__basedir}/logger`);
 
 module.exports = {
     sendSms: (to, body) => {
+        logger.info('sending sms');
+
         client.messages.create({
             body: body,
             to: to,
