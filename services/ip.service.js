@@ -7,8 +7,10 @@ var saved_ip;
 fs.readFile(ip_path, 'utf8', (err, data) => {
     if (err)
        logger.error('Error getting IP address from filesystem', err);
-    else
+    else {
+        logger.info(`Found IP from filesystem => ${data}`);
         saved_ip = data;
+    }
 });
 
 saveIP = (ip) => {
