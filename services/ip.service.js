@@ -1,5 +1,6 @@
 var ip = require('ip');
 var fs = require('fs');
+var logger = require(`${__basedir}/logger`);
 var ip_path = `${__basedir}/resources/current_ip.txt`;
 var saved_ip;
 
