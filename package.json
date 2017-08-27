@@ -24,6 +24,7 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "ip": "^1.1.5",
     "node-cmd": "^3.0.0",
     "rpio": "^0.9.17",
     "twilio": "^3.6.4",

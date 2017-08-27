@@ -17,10 +17,10 @@ fs.readFile(sockets_path, 'utf8', (err, data) => {
 });
 
 // send sms with current ip address
-require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-    logger.info(`current ip address is ${add}, and the fam is ${fam}`);
-    // sms.sendSms('+19706170810', `my current IP is ${add}  - power strip`);
-});
+var ip = require('ip').address();
+
+logger.info(`current ip address is ${ip}`);
+sms.sendSms('+19706170810', `my current IP is ${add}  - power strip`);
 
 // middleware
 router.use((req, res, next) => {
