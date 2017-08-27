@@ -20,7 +20,7 @@ fs.readFile(sockets_path, 'utf8', (err, data) => {
 var ip = require('ip').address();
 
 logger.info(`current ip address is ${ip}`);
-sms.sendSms('+19706170810', `my current IP is ${add}  - power strip`);
+sms.sendSms('+19706170810', `my current IP is ${ip}  - power strip`);
 
 // middleware
 router.use((req, res, next) => {
