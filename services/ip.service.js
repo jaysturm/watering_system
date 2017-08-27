@@ -10,20 +10,21 @@ fs.readFile(ip_path, 'utf8', (err, data) => {
         saved_ip = data;
 });
 
+saveIP = (ip) => {
+    fs.writeFile(ip_path, ip, (err) => {
+        if (err)
+            logger.error('**** error saving ip address to filesystem ****', err);
+        else
+            logger.info('**** IP address saved successfully ****');
+    });
+}
+
 module.exports = {
     getIP: () => {
         return ip.address();
     },
-    saveIP: (ip) => {
-        fs.writeFile(ip_path, ip, (err) => {
-            if (err)
-                logger.error('**** error saving ip address to filesystem ****', err);
-            else
-                logger.info('**** IP address saved successfully ****');
-        });
-    },
     isNewIP: () => {
-        var currentIP = getIP();
+        var currentIP = ip.address();
         var isNew = currentIP === saved_ip;
 
         if (isNew)
