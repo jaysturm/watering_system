@@ -18,7 +18,7 @@ module.exports = {
         return ip.address();
     },
     isNewIP: () => {
-        var saved_ip = fs.readFileSync(ip_path);
+        var saved_ip = fs.readFileSync(ip_path).toString();
 
         logger.info(`Found IP from filesystem => ${saved_ip}`);
 
