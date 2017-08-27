@@ -4,7 +4,7 @@ var logger = require(`${__basedir}/logger`);
 var ip_path = `${__basedir}/resources/current_ip.txt`;
 var saved_ip;
 
-fs.readFile(ip_path, 'utf8', (err, data) => {
+fs.readFileSync(ip_path, 'utf8', (err, data) => {
     if (err)
        logger.error('Error getting IP address from filesystem', err);
     else {
