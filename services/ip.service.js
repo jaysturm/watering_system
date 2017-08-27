@@ -4,15 +4,6 @@ var logger = require(`${__basedir}/logger`);
 var ip_path = `${__basedir}/resources/current_ip.txt`;
 var saved_ip;
 
-fs.readFileSync(ip_path, 'utf8', (err, data) => {
-    if (err)
-       logger.error('Error getting IP address from filesystem', err);
-    else {
-        logger.info(`Found IP from filesystem => ${data}`);
-        saved_ip = data;
-    }
-});
-
 saveIP = (ip) => {
     fs.writeFile(ip_path, ip, (err) => {
         if (err)
@@ -27,15 +18,24 @@ module.exports = {
         return ip.address();
     },
     isNewIP: () => {
-        var currentIP = ip.address();
-        var isNew = currentIP !== saved_ip;
+        fs.readFile(ip_path, 'utf8', (err, data) => {
+            if (err)
+            logger.error('Error getting IP address from filesystem', err);
+            else {
+                logger.info(`Found IP from filesystem => ${data}`);
 
-        logger.info(`it is ${isNew} that the IP is new`);
-        logger.info(`current IP is ${currentIP} and the saved IP is ${saved_ip}`);
+                var currentIP = ip.address();
+                var saved_ip = data;
+                var isNew = currentIP !== saved_ip;
 
-        if (isNew)
-            saveIP(currentIP);
+                logger.info(`it is ${isNew} that the IP is new`);
+                logger.info(`current IP is ${currentIP} and the saved IP is ${saved_ip}`);
 
-        return isNew;
+                if (isNew)
+                    saveIP(currentIP);
+
+                return isNew;
+            }
+        });
     }
 };
