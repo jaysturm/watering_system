@@ -28,6 +28,9 @@ module.exports = {
         var currentIP = ip.address();
         var isNew = currentIP === saved_ip;
 
+        logger.info(`it is ${isNew} that the IP is new`);
+        logger.info(`current IP is ${currentIP} and the saved IP is ${saved_ip}`);
+
         if (isNew)
             saveIP(currentIP);
 
