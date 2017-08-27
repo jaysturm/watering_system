@@ -21,7 +21,7 @@ fs.readFile(sockets_path, 'utf8', (err, data) => {
 // send sms with current ip address
 if (ip.isNewIP()) {
     var address = ip.getIP();
-    logger.info(`current ip address is ${address}`);
+    logger.info(`sending IP address (${address}) sms.`);
     sms.sendSms('+19706170810', `${os.EOL}New IP address detected! => ${address}${os.EOL}  - power strip${os.EOL} P.S. I miss you`);
 }
 
