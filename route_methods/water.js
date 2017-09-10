@@ -6,16 +6,15 @@ var logger = require(`${__basedir}/logger`);
 
 // watering cycle settings
 var dispensed = 0, // water dispensed thus far (flow meter pulses)
-    amountToDispense = 60, // desired pulses (don't know how much water per pulse yet)
     pulsesPerGallon = 60,
     zoneToWater = -1; // which zone to water
 
 // pins
-var waterPump = 3,
-    solenoidValve = 5,
-    relay3 = 7,
-    relay4 = 11,
-    flowSensor = 27;
+var flowSensor = 2;
+
+// sockets
+var waterPump = 1,
+    valve = 2;
 
 // middleware
 router.use((req, res, next) => {
@@ -31,6 +30,9 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     try {
         logger.info('**** starting watering cycle ****');
+
+        // desired pulses (don't know how much water per pulse yet)
+        var amountToDispense = req.body.waterAmount;
 
         // set up flow sensor pin and register handler
         // rpio.open(flowSensor, rpio.INPUT, rpio.PULL_UP);
