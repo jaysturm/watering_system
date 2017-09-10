@@ -11,7 +11,6 @@ require('winston-logs-display')(server, logger);
 
 var defaultRoute = require(`${__basedir}/route_methods/index`);
 var water = require(`${__basedir}/route_methods/water`);
-var powerStrip = require(`${__basedir}/route_methods/powerStrip`);
 
 server.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -22,15 +21,17 @@ server.use((req, res, next) => {
 server.use(bodyParser.json());
 
 server.use('/', defaultRoute);
-// server.use('/water', water);
-server.use('/sockets', powerStrip);
+server.use('/water', water);
 
 server.listen(5555, () => {
     // set up rpio and gpio pins
-    var allOutputPins = [3, 5, 7, 11, 13, 15, 19, 21];
-    gpioUtil.initOutPins(allOutputPins);
+    var allDownOutputPins = [3, 5, 7, 11, 13, 15, 19, 21];
+    gpioUtil.initOutPins(allDownOutputPins, true);
 
-    logger.info(`Server running at http://${ip.getIP()}:5555/`);
+    var allUpOutputPins = [2];
+    gpioUtil.initOutPins(allUpOutputPins, false);
+
+    logger.info(`Watering server running at http://${ip.getIP()}:5555/`);
 });
 
 module.exports = server;
