@@ -26,7 +26,7 @@ module.exports = {
         if (isNew) {
             logger.info(`new IP address detected`);
             saveIP(currentIP);
-        }
+        } else logger.info(`consistent ip address detected`);
 
         return isNew;
     }
